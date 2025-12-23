@@ -1,0 +1,365 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: rgb(53, 54, 58);
+  font-family: 'Inter';
+  src: url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+}
+
+#app {
+  height: 100%;
+}
+
+
+main {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+#message-input {
+  flex-grow: 1;
+  background-color: rgb(59, 61, 66);
+  font-size: 16px;
+  border-radius: 5px;
+  padding: 5px;
+  color: #fff;
+  width: auto;
+}
+
+
+#send-button {
+  border-radius: 5px;
+  background-color: rgb(59, 61, 66);
+  padding: 5px 10px;
+  color: #fff;
+  cursor: pointer;
+  width: 40;
+  height: 40;
+}
+
+/* Rest of your styles */
+
+#message-container {
+  flex-grow: 1; /* Fixed height based on viewport height */
+  height: 85vh;
+  max-height: 93%;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: #000000;
+  overflow-y: auto;
+  border: 2px solid rgb(53, 54, 58);
+  border-radius: 5px;
+  margin: 5px;
+}
+#controls-container {
+  flex-shrink: 0;
+  background-color: rgb(59, 61, 66);
+  border-radius: 5px;
+  padding: 5px;
+  height: 5%;
+  margin-bottom: 5px;
+  flex-direction: row;
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  left: 5px;
+  right: 5px;
+  margin-left: 200px;
+  margin-top: 0;
+}
+
+  * {
+    box-shadow: none;
+    outline: none;
+    border: 0px;
+  }
+  #sendimage {
+    max-width: 20px;
+    max-height: 20px;
+    background: transparent;
+    padding: -15;
+    margin: 0;
+    display: inline-flex;
+    border: none;
+  }
+  
+
+  /* from here on out, it's probably for the messages, and not the window */
+
+  #chat-messages span{
+    margin: 5px;
+    font-size: 16 ;
+    color: white;
+    font-family: 'Inter', sans-serif;
+  }
+  #css-bold {
+    font-size: 14;
+    font-family: 'Inter', sans-serif;
+    font-weight: bold;
+    color: white;
+  }
+  #chat-messages{
+    border-radius: 5px;
+    padding: 5px;
+    margin: 1vh;
+    background-color: rgb(53, 54, 58);
+  }
+  #chat-messages hr{
+    background-color: #00000000;
+    padding: 1px;
+    margin: 0px;
+    border: 0px;
+  }
+  #chat-messages div{
+    margin: 5px;
+    font-size: 20 ;
+  }
+
+
+
+
+  .sidebar {
+    width: 200px;
+    background-color: rgb(48, 49, 52);
+    height: 100vh;
+    position: fixed;
+    overflow-y: auto;
+  }
+  
+  .sidebar-menu {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .sidebar-menu li {
+    padding: 10px;
+  }
+  
+  .sidebar-menu li a {
+    text-decoration: none;
+    color: #000;
+  }
+  
+  .sidebar-menu li a:hover {
+    background-color: rgb(75, 77, 82);
+  }
+  
+  .content {
+    margin-left: 200px;
+    padding: 20px;
+  }
+  #settings {
+    position: fixed;
+    bottom: 0;
+    margin-bottom: 10px;
+    margin-left: 0px;
+    display: flex;
+    background-color: #00000000;
+  }
+  #settingsimage {
+    max-width: 40px;
+    max-height: 40px;
+    background: transparent;
+    margin: 0;
+    display: inline-flex;
+    border: none;
+  }
+  #open-dialog-button {
+  background-color: #00000000;
+  cursor: pointer;
+  margin-left: 5px;
+  padding: 0;
+}
+#usersusername {
+  display: flex;
+  flex-direction: row;
+  color:rgb(182, 182, 182);
+  font-family: 'Inter', sans-serif;
+  margin-left: 10px;
+  margin-top: 5;
+}
+.dialog-container {
+  display: none;
+  position: fixed;
+  margin: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+}
+
+/* Style for the dialog content */
+.dialog-content {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(53, 54, 58);
+  padding: 20px;
+  width: 80%;
+  max-width: 600px;
+  height: 80%;
+  max-height: 400px;
+  overflow: auto;
+  border-radius: 10px;
+  color: rgb(153	156	162);
+  font-family: 'Inter', sans-serif;
+}
+#settingscontent{
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+}
+#UsernameChange{
+  margin-right: 5px;
+  margin-left: 5px;
+  height: 25;
+  padding: 5px;
+  font-size: 16px;
+  border-radius: 5px;
+  background-color: rgb(59, 61, 66);
+  color:rgb(149, 153, 162)
+}
+#saveUserChanges{
+  background-color: rgb(82, 77, 179);
+  padding: 5px;
+  border-radius: 5px;
+  color: rgb(185, 190, 201);
+  font-size: 16px;
+}
+#saveUserChanges:hover{
+  background-color: rgb(92, 88, 179);
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+/* Style for the close button */
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  cursor: pointer;
+}
+#title{
+  margin-top: -5;
+  margin-bottom: 5px;
+  color: white;
+  font-family: 'Inter', sans-serif;
+}
+#main-chat{
+  background-color: rgb(57, 58, 63);
+  margin-left: 5px;
+  margin-right: 5px;
+  height: 30px;
+  padding-left: 5px;
+  margin-bottom: 0;
+  margin-top: 0;
+  border-radius: 5px;
+}
+#main-chat:hover{
+  background-color: rgb(90, 91, 99);
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 0;
+  margin-top: 0;
+  height: 30px;
+  padding-left: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+#Ptitle{
+  font-family: 'Inter', sans-serif;
+  color: rgb(149, 153, 162);
+  padding-top: 6px;
+  padding-left: 10px;
+  margin: 5;
+}
+#servert{
+  margin-bottom: 5px;
+  margin-left: 10px;
+  color: white;
+  font-family: 'Inter', sans-serif;
+}
+a{
+  text-decoration: none;
+  margin: 0;
+}
+#logout-button{
+  position: fixed;
+  width: auto;
+  height: auto;
+  background-color: rgb(42, 42, 42);
+  color: rgb(153	156	162);
+  border-radius: 5px;
+  padding: 8px;
+  margin: 10;
+  bottom: 0;
+  left: 0;
+  font-size: 16;
+}
+#logout-button:hover{
+  position: fixed;
+  width: auto;
+  height: auto;
+  background-color: rgb(57, 58, 63);
+  color: rgb(153	156	162);
+  border-radius: 5px;
+  padding: 8px;
+  margin: 10;
+  bottom: 0;
+  left: 0;
+  font-size: 16;
+  cursor: pointer;
+}
+#pfpimage {
+  max-width: 40px;
+    max-height: 40px;
+    background: transparent;
+    margin: 0;
+    display: inline-flex;
+    border: 1px solid;
+    border-radius: 5px;
+    border-color: #00000026;
+    margin-left: 0px;
+    padding: 0;
+}
+#welcname{
+  display: flex;
+  flex-direction: column;
+  margin-left: 5px;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: rgb(42, 42, 42);
+  color: rgb(149, 153, 162);
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  top: -30;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  font-family: 'Inter', sans-serif;
+}

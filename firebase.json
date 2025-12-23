@@ -1,0 +1,11 @@
+{
+  "hosting": {
+    "site": "rubbifien",
+    "public": "/",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}

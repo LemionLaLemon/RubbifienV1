@@ -1,0 +1,189 @@
+<body>
+  <link rel="stylesheet" type="text/css" href="app.css" />
+  <title>Rubbifien</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+<div id="app">  
+
+    <div class="sidebar">
+      <ul class="sidebar-menu">
+        <h2 id="servert">Rubbifien</h2>
+        <a href="app.html">
+          <div id="main-chat">
+            <p id="Ptitle">Main chat</p>
+          </div>
+        </a>
+        <a href="404.html">
+          <div id="main-chat">
+            <p id="Ptitle">Coming soon</p>
+          </div>
+        </a>
+         <div id="settings">
+          <button id="open-dialog-button" onclick="openDialog()">
+            <div id="pfpContainerB" class="tooltip">
+              <span class="tooltiptext">User settings</span>
+              </div>
+            </button>
+          <div id="usersusername">
+            <div id="welcname">
+            <span id="welcome">Welcome, </span>
+           <span id="username"></span>
+          </div>
+          </div>
+        </div>
+      </ul>
+    </div>
+
+
+    <div class="content">
+    <main>
+      <h3 id="title">Main chat</h3>
+      <div id="message-container">
+      <div id="chat-messages">
+      </div>
+    </div>
+    </main>
+      <div class="message-input-container" id="controls-container">
+        <input type="text" id="message-input" placeholder="Give me a good placeholder.">
+        <button id="send-button"><img src="send-icon.png" id="sendimage"></button>
+      </div>
+  </div>
+</div>
+
+<div id="dialogContainer" class="dialog-container">
+  <div class="dialog-content">
+    <span class="close-button" onclick="closeDialog()">&times;</span>
+    <h2>Settings</h2>
+    <h4>Change your username</h4>
+    <div id="settingscontent">
+      
+    <div id="pfpContainerB" class="pfp"></div>
+    <input type="text" id="UsernameChange" placeholder="">
+    <button id="saveUserChanges">Save changes</button>
+    <button id="logout-button">Log Out</button>
+  </div>
+  </div>
+</div>
+
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="app.js"></script>
+</body>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Get the reference to the <span> elements
+    const welcomeSpan = document.getElementById('welcome');
+    const usernameSpan = document.getElementById('username');
+    const usernameChangeInput = document.getElementById('UsernameChange');
+
+    // Get the username from the session variable
+    const username = sessionStorage.getItem('username');
+
+    // Check if the username is not null or empty
+    if (username) {
+      // Set the username as the content of the <span> element
+      usernameSpan.textContent = username;
+      usernameChangeInput.placeholder = username;
+    }
+  });
+  </script>
+<script>
+  // Function to open the dialog
+  function openDialog() {
+    document.getElementById("dialogContainer").style.display = "block";
+  }
+  
+  // Function to close the dialog
+  function closeDialog() {
+    document.getElementById("dialogContainer").style.display = "none";
+  }
+  </script>
+<script>
+  // Get the logout button element
+const logoutButton = document.getElementById('logout-button');
+
+// Add event listener to the logout button
+logoutButton.addEventListener('click', (event) => {
+  // Clear the session variable
+  sessionStorage.removeItem('username');
+  
+  // Redirect to index.html
+  window.location.href = 'index.html';
+});
+
+  </script>
+<script>
+  // Declare the pfp variable
+  let pfp;
+  
+  
+  // Retrieve the user data from Firestore
+  db.collection("users").doc(username).get()
+    .then((doc) => {
+      if (doc.exists) {
+        const userData = doc.data();
+        // Get the pfp value from the user data
+        pfp = userData.pfp;
+
+        // Display the profile picture
+        const pfpContainerb = document.getElementById("pfpContainerB");
+        const img = document.createElement("img");
+        img.src = `pfp/${pfp}.png`;
+        img.alt = pfp;  
+        img.id = "pfpimage";
+        pfpContainerb.appendChild(img);
+      } else {
+        console.log("User data not found.");
+      }
+    })
+    .catch((error) => {
+      console.error("Error retrieving user data: ", error);
+    });
+  </script>
+<script>
+// Get the reference to the input field and save button
+const usernameInput = document.getElementById("UsernameChange");
+const saveChangesButton = document.getElementById("saveUserChanges");
+
+// Function to handle saving user changes
+function handleSaveChanges() {
+  // Retrieve the new username from the input field
+  const newUsername = usernameInput.value;
+
+  // Check if the new username is not empty
+  if (newUsername.trim() !== "") {
+    // Get the reference to the current user's document
+    const currentUserRef = db.collection("users").doc(username); // Assuming 'username' is the current user's username
+
+    // Perform a transaction to update the username and document ID
+    db.runTransaction((transaction) => {
+      // Get the current user document
+      return transaction.get(currentUserRef).then((doc) => {
+        if (doc.exists) {
+          // Delete the current user document
+          transaction.delete(currentUserRef);
+
+          // Create a new document with the new username as the document ID
+          const newUserRef = db.collection("users").doc(newUsername);
+          transaction.set(newUserRef, doc.data());
+        }
+      });
+    })
+      .then(() => {
+        console.log("Username updated successfully.");
+        // Optionally, you can update the displayed username on the page
+        sessionStorage.removeItem('username');
+        // Redirect to index.html
+        window.location.href = 'namechangelogin.html';
+      })
+      .catch((error) => {
+        console.error("Error updating username: ", error);
+      });
+  }
+}
+
+// Add an event listener to the save button
+saveChangesButton.addEventListener("click", handleSaveChanges);
+
+  </script>

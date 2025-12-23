@@ -1,0 +1,14 @@
+{
+  "name": "rubbifein2",
+  "version": "1.0.0",
+  "description": "Simple messaging app lol",
+  "main": "app.js",
+  "scripts": {
+    "test": "runlol"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "firebase": "^9.22.2"
+  }
+}

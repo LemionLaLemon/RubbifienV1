@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+<html>
+<title>Rubbifien</title>
+    <link rel="stylesheet" type="text/css" href="signup.css" />
+    <div class="center">
+  <center><h1>Create an account</h1></center>
+  <form action="login.html" method="POST" id=signupForm>
+    <label for="username">Username</label><br>
+    <center><input type="text" id="username" name="username" required></center>
+    <br>
+    <label for="password">Password</label> <br>
+    <center><input type="password" id="password" name="password" required></center>
+    <br>
+    <big><input type="submit" value="Signup" id="signup"></big>
+  </form>
+  <label id="normal">Already have an account?</label>
+  <a href="index.html">Log in</a>
+</div>
+</html>
+
+<script>
+    // Initialize Firebase
+    const firebaseConfig = {
+    };
+    firebase.initializeApp(firebaseConfig);
+
+const db = firebase.firestore();
+
+// Function to generate a random number between min and max (inclusive)
+function getRandomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+// Function to handle user signup
+function handleSignup() {
+  // Retrieve the username and password from the signup form
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
+
+  // Generate a random number for the profile picture
+  const pfpNumber = getRandomNumber(1, 20);
+
+  // Save the user data to Firestore
+  db.collection("users")
+    .doc(username)
+    .set({
+      password: password,
+      pfp: pfpNumber,
+      username: username,
+    })
+    .then(() => {
+      console.log("User data stored successfully.");
+      // Redirect to the login page or any other desired page
+      window.location.href = "index.html";
+    })
+    .catch((error) => {
+      console.error("Error storing user data: ", error);
+    });
+}
+
+// Add an event listener to the signup form submit button
+const signupForm = document.getElementById("signupForm");
+signupForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  handleSignup();
+});
+  </script>
